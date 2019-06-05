@@ -81,7 +81,12 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Curso Laravel
+                    @isset($title)
+                    {{$title}}
+                    @else
+                    {{"No title"}}
+                    @endisset
+                    
                 </div>
 
                 <div class="links">
