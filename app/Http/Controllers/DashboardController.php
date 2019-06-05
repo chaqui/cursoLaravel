@@ -9,7 +9,8 @@ class DashboardController extends Controller
     //
     public function index(Request $request)
     {
-        dd($request->query('title',"dasdas"));
-        return view('test');
+        return view('test',[
+            'title'=>$request->query('title','Valor ads')
+        ]);
     }
 }
