@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\ExpenseReportService;
+use App\ExpenseReport;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SummaryReport;
 
 class ExpenseReportController extends Controller
 {
@@ -54,9 +57,11 @@ class ExpenseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ExpenseReport $expenseReport)
     {
-        
+        return view('expenseReport.show',[
+            'report'=>$expenseReport
+        ]);
     }
 
     /**
@@ -98,6 +103,23 @@ class ExpenseReportController extends Controller
     }
 
     public function confirmDelete($id){
-        return view('expenseReport.confirmDelete',['report'=>$this->expenseReportService->show($id)]);
+        return view('expenseReport.confirmDelete',['report'=>$this->expenseReportService->get($id)]);
+    }
+
+    public function confirmSendMail($id)
+    {
+        return view('expenseReport.confirmSendMail',['report'=>$this->expenseReportService->get($id)]);
+    }
+
+    public function sendMail(Request $request, $id)
+    {
+        $request->validate([
+            'Email'=> 'required|email '
+        ]);
+
+        $report = $this->expenseReportService->get($id);
+        Mail::to($request->get('Email'))->send(new SummaryReport($report));
+
+        return redirect('/expense_reports/'.$id);
     }
 }

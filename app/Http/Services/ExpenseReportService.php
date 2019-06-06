@@ -19,19 +19,24 @@ class ExpenseReportService {
     }
     public function show($id)
     {
+      return $this->get($id);
+    }
+
+    public function get($id)
+    {
       return ExpenseReport::findOrFail($id);
     }
 
     public function update(Request $request, $id )
     {
-      $report = $this->show($id);
+      $report = $this->get($id);
       $report->title= $request->get('title');
       $report->save();
     }
 
     public function destroy($id)
     {
-      $report = $this->show($id);
+      $report = $this->get($id);
       $report->delete();
     }
 }
