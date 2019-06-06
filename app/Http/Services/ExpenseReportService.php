@@ -17,4 +17,21 @@ class ExpenseReportService {
         $report->title = $request->get('title');
         $report->save();
     }
+    public function show($id)
+    {
+      return ExpenseReport::findOrFail($id);
+    }
+
+    public function update(Request $request, $id )
+    {
+      $report = $this->show($id);
+      $report->title= $request->get('title');
+      $report->save();
+    }
+
+    public function destroy($id)
+    {
+      $report = $this->show($id);
+      $report->delete();
+    }
 }

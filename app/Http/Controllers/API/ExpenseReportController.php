@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\ExpenseReportService;
+use Illuminate\Support\Facades\Response;
 
 class ExpenseReportController extends Controller
 {
@@ -32,7 +33,7 @@ class ExpenseReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->expenseReportService->store($request);
     }
 
     /**
@@ -43,7 +44,7 @@ class ExpenseReportController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->expenseReportService->show($id);
     }
 
     /**
@@ -55,7 +56,8 @@ class ExpenseReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->expenseReportService->update($request, $id);
+        new Response(200);
     }
 
     /**
@@ -66,6 +68,7 @@ class ExpenseReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->expenseReportService->destroy($id);
+        new Response(200);
     }
 }

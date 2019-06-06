@@ -41,6 +41,9 @@ class ExpenseReportController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'=> 'required|min:3 '
+        ]);
         $this->expenseReportService->store($request);
         return redirect('/expense_reports');
     }
@@ -53,7 +56,7 @@ class ExpenseReportController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -64,7 +67,9 @@ class ExpenseReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('expenseReport.edit',[
+            'report'=>$this->expenseReportService->show($id)
+        ]);
     }
 
     /**
@@ -76,7 +81,8 @@ class ExpenseReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->expenseReportService->update($request,$id);
+        return redirect('/expense_reports');
     }
 
     /**
@@ -87,6 +93,11 @@ class ExpenseReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->expenseReportService->destroy($id);
+        return redirect('/expense_reports');
+    }
+
+    public function confirmDelete($id){
+        return view('expenseReport.confirmDelete',['report'=>$this->expenseReportService->show($id)]);
     }
 }
