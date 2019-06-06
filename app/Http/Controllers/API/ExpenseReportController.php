@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Services\ExpenseReportService;
 
 class ExpenseReportController extends Controller
 {
     private  $expenseReportService;
-    
+
     public function __construct(ExpenseReportService $reportService)
     {
         $this->expenseReportService = $reportService;
@@ -20,17 +21,7 @@ class ExpenseReportController extends Controller
      */
     public function index()
     {
-        return view('expenseReport.index',['ExpenseReports'=>$this->expenseReportService->index()]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('expenseReport.create');
+        return $this->expenseReportService->index();
     }
 
     /**
@@ -41,8 +32,7 @@ class ExpenseReportController extends Controller
      */
     public function store(Request $request)
     {
-        $this->expenseReportService->store($request);
-        return redirect('/expense_reports');
+        //
     }
 
     /**
@@ -52,17 +42,6 @@ class ExpenseReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
